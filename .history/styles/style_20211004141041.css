@@ -1,0 +1,23 @@
+* {
+  box-sizing: border-box;
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1;
+  font-size: 1.6rem;
+}
+.shoping-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.shoping-title {
+  font-size: 2rem;
+  color: #333;
+}
+.shoping-cart {
+  font-size: 1.8rem;
+}
