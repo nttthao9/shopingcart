@@ -20,9 +20,11 @@ body {
   font-family: 'Poppins', sans-serif;
   line-height: 1;
   font-size: 1.6rem;
+  background-color: #f5f5f5;
 }
 .shoping {
   padding: 1rem;
+  position: relative;
 }
 .shoping-bar {
   display: flex;
@@ -36,94 +38,179 @@ body {
   text-transform: uppercase;
 }
 .shoping-cart {
-  font-size: 2rem;
-  padding: 1rem;
+  font-size: 2.5rem;
   cursor: pointer;
+  color: #333;
 }
 .product-list {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  margin-left: -1rem;
 }
-.product-item {
-  width: 50%;
+.link {
+  display: inline-block;
+  margin: 0 2rem;
+  font-size: 2rem;
+  text-decoration: none;
+  padding-bottom: 5px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.25s linear;
+  color: #333;
+}
+.link:hover {
+  border-bottom-color: #45b0ff;
+}
+.item-content {
+  height: calc(100% - 20rem);
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.item {
+  width: calc(25% - 1rem);
+  margin-left: 1rem;
+  border: 1px solid #d7e6ff;
+  padding: 1rem;
+  border-radius: 5px;
   margin-bottom: 2rem;
 }
-.product-name {
+.image {
+  width: 100%;
+  height: 20rem;
+  -o-object-fit: cover;
+  object-fit: cover;
+  border-radius: inherit;
+}
+.text {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+.price {
+  font-size: 3rem;
+  color: #333;
+  text-align: center;
   display: block;
   margin-bottom: 1rem;
 }
-.product-price {
-  display: inline-block;
+.price span {
+  font-size: 2.2rem;
+  position: relative;
+  top: -5px;
+}
+.change {
   margin-bottom: 1rem;
-}
-.product-desc {
-  margin-left: 2rem;
-  display: flex;
-  flex-direction: column;
-}
-.product-count {
-  width: 15%;
   text-align: center;
-}
-.product-buy {
   margin-top: auto;
 }
-.cart-icon {
+.count {
+  font-size: 2rem;
+  padding: 1rem 2rem;
+  background-color: #eee;
+  border-radius: 1rem;
   display: inline-block;
-  font-size: 1.8rem;
+  margin: 0 1rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.add,
+.minus {
+  padding: 5px;
   cursor: pointer;
-  margin-right: 2rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
-.product-image {
-  width: 30rem;
-  overflow: hidden;
-  -o-object-fit: cover;
-  object-fit: cover;
+.order {
+  border: 0;
+  border-radius: inherit;
+  width: 100%;
+  padding: 1rem 0;
+  font-family: 'Poppins', sans-serif;
+  line-height: 1;
+  font-size: 1.8rem;
+  color: white;
+  background-color: #5691ff;
+  font-weight: bold;
+  cursor: pointer;
+  letter-spacing: 2px;
+  margin-top: auto;
 }
-.cart {
+
+.cart-order {
+  width: 30%;
+  background-color: #45b0ff;
+  padding: 1rem;
   position: fixed;
   top: 10%;
   right: 0;
-  width: 50rem;
-  background-color: #eee;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 5px;
+  color: white;
   transform: translateX(100%);
   transition: transform 0.25s linear;
+  overflow-y: scroll;
+  /* height: 100%; */
 }
-.cart.active {
+.cart {
+}
+.cart-order.active {
   transform: translateX(0);
-}
-.cart-image {
-  width: 15rem;
-}
-.cart-desc span {
-  display: inline-block;
-  margin-right: 1rem;
-}
-.cart-desc,
-.cart-change {
-  margin-right: 2rem;
-}
-.cart-change i {
-  padding: 0 1rem;
-  cursor: pointer;
 }
 .cart-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 2rem;
+  margin-bottom: 1rem;
 }
-.count {
-  font-size: 2rem;
-}
-.total,
-.total-price {
-  font-size: 2rem;
+.cart-item > * {
+  margin-right: 2rem;
 }
 .trash-icon {
-  padding: 1rem;
+  margin-left: auto;
   cursor: pointer;
+}
+.count-item {
+  display: inline-block;
+  font-size: 1.4rem;
+  margin: 1rem 1.5rem;
+}
+.add-item,
+.minus-item {
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.cart-image {
+  width: 7rem;
+  height: 10rem;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+.price-item {
+  font-size: 1.6rem;
+  display: block;
+  margin: 1rem 0;
+}
+.checkout {
+  border: 0;
+  width: 100%;
+  padding: 2rem 0;
+  font-family: 'Poppins', sans-serif;
+  line-height: 1;
+  font-size: 1.8rem;
+  margin-top: 2rem;
+  cursor: pointer;
+}
+.total-text {
+  font-size: 2rem;
+}
+.total-all {
+  font-size: 1.8rem;
+}
+@media (max-width: 767px) {
+  .item {
+    width: calc(50% - 1rem);
+  }
 }
