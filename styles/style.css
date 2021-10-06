@@ -155,8 +155,7 @@ body {
   overflow-y: scroll;
   /* height: 100%; */
 }
-.cart {
-}
+
 .cart-order.active {
   transform: translateX(0);
 }

@@ -28,11 +28,12 @@ const listItem = [
     price: 25,
   },
 ];
+
 const productList = document.querySelector('.product-list');
 const shopingIcon = document.querySelector('.shoping-icon');
 const cart = document.querySelector('.cart');
 const cartOrder = document.querySelector('.cart-order');
-const cartList = [];
+let cartList = [];
 
 function renderList(src, name, price) {
   return `<div class="item">
@@ -53,7 +54,7 @@ productList.innerHTML = listItem
   .map((item) => renderList(item.image, item.name, item.price))
   .join('');
 
-function renderCartList(image, name, price, quantity) {
+function renderCartList(image, name, price, quantity = 0) {
   return `<div class="cart-item">
   <img src=${image} alt="" class="cart-image">
   <div class="cart-desc">
@@ -68,12 +69,12 @@ function renderCartList(image, name, price, quantity) {
   <i class="fa fa-trash trash-icon"></i>
 </div>`;
 }
+
 const btnOrder = document.querySelectorAll('.order');
 const countQuantity = document.querySelectorAll('.count');
 const addBtn = document.querySelectorAll('.add');
 const minusBtn = document.querySelectorAll('.minus');
 const totalAll = document.querySelector('.total-all');
-const deleteIcon = document.querySelectorAll('.trash-icon');
 let value;
 
 [...addBtn].forEach((item) =>
@@ -91,47 +92,109 @@ let value;
       return 0;
     }
     e.target.previousElementSibling.textContent = value;
-    console.log(+e.target.previousElementSibling.textContent);
   })
 );
+let totalPrice = 0;
 
 [...btnOrder].forEach((item, index) =>
-  item.addEventListener('click', function (e) {
-    e.target.dataset.index = index;
-    let countItem = +countQuantity[index].textContent;
-    if (countItem > 0) {
-      const cartItem = listItem[index];
-      cartItem.quantity = countItem;
-      cartItem.total = countItem * cartItem.price;
-      cartList.push(cartItem);
-      console.log(cartList, 'check');
-
-      cart.innerHTML = cartList
-        .map((item) =>
-          renderCartList(item.image, item.name, item.price, item.quantity)
-        )
-        .join('');
-      // console.log(cartList, 'check');
-
-      const deleteIcon = document.querySelectorAll('.trash-icon');
-      [...deleteIcon].forEach((item) =>
-        item.addEventListener('click', function (e) {
-          const itemDelete = e.target.parentNode;
-          console.log(itemDelete);
-        })
-      );
-      let totalPrice = cartList.reduce(
-        (previous, item) => previous + item.total,
-        0
-      );
-      totalAll.textContent = `${totalPrice}$`;
-
-      countQuantity[index].textContent = 0;
+  item.addEventListener('click', () => {
+    let j = index;
+    if (+countQuantity[j].textContent > 0) {
+      let countItem = +countQuantity[j].textContent;
+      let item = listItem[j];
+      if (!cartList.length) {
+        showIncart(item, j, countItem);
+      } else {
+        for (let i = 0; i < cartList.length; i++) {
+          if (item.id == cartList[i].id) {
+            alert(
+              'you already chosen this item! you can change your quantity in your cart'
+            );
+            countQuantity[j].textContent = 0;
+            return;
+          }
+        }
+        showIncart(item, j, countItem);
+      }
+      addInCart();
+      minusInCart();
+      deleteItem();
+      price();
     } else {
-      alert('you have to select quantity first');
+      alert('you must chose quantity');
     }
   })
 );
+
+function showIncart(item, i, countItem) {
+  item.quantity = countItem;
+  item.total = countItem * item.price;
+
+  cartList.push(item);
+  cart.innerHTML = cartList
+    .map((item) =>
+      renderCartList(item.image, item.name, item.price, item.quantity)
+    )
+    .join('');
+  console.log(cartList);
+  countQuantity[i].textContent = 0;
+}
+
+function addInCart() {
+  const addItem = document.querySelectorAll('.add-item');
+  [...addItem].forEach((item, index) =>
+    item.addEventListener('click', (e) => {
+      value = +e.target.nextElementSibling.textContent;
+      value++;
+      e.target.nextElementSibling.textContent = value;
+      cartList[index].quantity = value;
+      console.log(value);
+      cartList[index].total = value * cartList[index].price;
+      price();
+      // console.log('check1');
+    })
+  );
+}
+function minusInCart() {
+  const minusItem = document.querySelectorAll('.minus-item');
+  [...minusItem].forEach((item, index) =>
+    item.addEventListener('click', (e) => {
+      value = e.target.previousElementSibling.textContent;
+      +value--;
+      if (value < 0) {
+        e.target.previousElementSibling.textContent = 0;
+        return;
+      }
+      e.target.previousElementSibling.textContent = value;
+      cartList[index].quantity = value;
+      cartList[index].total = value * cartList[index].price;
+      price();
+    })
+  );
+}
+
+function price() {
+  totalAll.textContent =
+    cartList.reduce((previous, item) => previous + item.total, 0) + '$';
+}
+
+function deleteItem() {
+  const deleteIcon = document.querySelectorAll('.trash-icon');
+  deleteIcon.forEach((item, i) =>
+    item.addEventListener('click', (e) => {
+      let itemdelete = cartList[i];
+      e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+      //doan nay co bug :<
+      cartList = cartList.filter(
+        (item) => item.id !== itemdelete.id,
+        'checkkkk'
+      );
+      console.log(cartList);
+      price();
+    })
+  );
+  price();
+}
 
 shopingIcon.addEventListener('click', function () {
   cartOrder.classList.toggle('active');
