@@ -148,12 +148,13 @@ body {
   position: fixed;
   top: 10%;
   right: 0;
+  bottom: 0;
   border-radius: 5px;
   color: white;
   transform: translateX(100%);
   transition: transform 0.25s linear;
   overflow-y: scroll;
-  /* height: 100%; */
+  overflow-x: scroll;
 }
 
 .cart-order.active {
@@ -211,5 +212,15 @@ body {
 @media (max-width: 767px) {
   .item {
     width: calc(50% - 1rem);
+  }
+  .cart-order {
+    width: 50%;
+    overflow-y: auto;
+  }
+}
+@media (max-width: 375px) {
+  .cart-order {
+    width: 80%;
+    overflow-y: auto;
   }
 }
